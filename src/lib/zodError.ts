@@ -9,6 +9,7 @@ const formatZodIssue = (issue: ZodIssue): string => {
 
 export const formatZodError = (error: ZodError): any => {
     const { issues } = error;
+
     const errors = issues.map(issue => {
       return formatZodIssue(issue);
     });

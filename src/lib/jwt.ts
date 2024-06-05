@@ -21,7 +21,7 @@ export async function decrypt(input: string): Promise<any> {
 
 export async function validAuth(req: Request, res: Response, next: NextFunction): Promise<any>{
   try {
-    const header = req.headers['authorization'];
+    const header = req.headers.authorization;
 
     const token = header?.split(' ')[1];
 

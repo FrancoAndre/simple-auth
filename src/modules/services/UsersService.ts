@@ -6,13 +6,8 @@ import { UserCreateAndUpdateInterface, UsersInterface } from '../../@types/users
 
 const UsersService = {
 
-  async getAll(){
-    const users: UsersInterface[] = await UsersRepository.getAll();
-    return users;
-  },
-
   async getUserByEmail(email: string){
-    const user: Users = await UsersRepository.getUserByEmail(email);
+    const user: Users | null = await UsersRepository.getUserByEmail(email);
     return user;
   },
 
@@ -40,22 +35,6 @@ const UsersService = {
 
   async delete(id: number){
     await UsersRepository.delete(id);
-  },
-
-  async login(email: string, password: string){
-    const userLogin: Users = await UsersRepository.getUserByEmail(email);
-
-    if(!userLogin){
-      throw new Error('User with this email not found!');
-    }
-
-    const isPasswordCorrect = await bcrypt.compare(password, userLogin.password);
-
-    if(!isPasswordCorrect){
-      throw new Error('E-mail or password are incorrect!');
-    }
-
-    return userLogin;
   },
 
 }

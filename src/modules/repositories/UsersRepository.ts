@@ -4,29 +4,6 @@ import { Users } from "@prisma/client";
 
 const UsersReposity = {
 
-  async getAll(id: number){
-    const users: UsersInterface = await prisma.users.findFirstOrThrow({
-      where: { id: id},
-      select: {
-        password: false,
-        id: true,
-        createdAt: true,
-        email: true,
-        username: true,
-      }
-    });
-    return users;
-  },
-
-  async getUserByEmail(email: string){
-    const user: Users = await prisma.users.findFirstOrThrow({
-      where: {
-        email: email
-      }
-    });
-    return user;
-  },
-
   async getUserById(id: number){
     const user: UsersInterface = await prisma.users.findFirstOrThrow({
       select: {
@@ -42,6 +19,16 @@ const UsersReposity = {
     });
     return user;
   },
+
+  async getUserByEmail(email: string){
+    const user: Users | null = await prisma.users.findFirst({
+      where: {
+        email: email
+      }
+    });
+    return user;
+  },
+
 
   async create(User: UserCreateAndUpdateInterface){
     const userCreated: UsersInterface = await prisma.users.create(
